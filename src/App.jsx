@@ -10,11 +10,8 @@ function App () {
     },
     password: {
       value: '',
-      rule: 'required'
-    },
-    message: {
-      value: '',
-      rule: 'required'
+      type: 'password',
+      rule: 'max'
     }
   })
 
@@ -23,18 +20,28 @@ function App () {
       ...prev,
       [key]: {
         ...prev[key],
-        value
+        value,
+        invalid: handleValidationRule({rule: prev[key].rule, value})
       }
     }))
-    validate(key)
   }
 
   function handleSubmit (ev) {
     ev.preventDefault()
-    // treci prin toate form props si valideaza
     Object.keys(form).forEach(key => {
       validate(key)
     })
+  }
+
+  function handleValidationRule ({rule, value}) {
+    switch (rule) {
+      case 'required':
+        return !value
+      case 'email':
+        return !/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(value)
+      case 'max':
+        return value.length > 6
+    }
   }
 
   function validate (key) {
@@ -42,7 +49,7 @@ function App () {
       ...prev,
       [key]: {
         ...prev[key],
-        invalid: !form[key].value
+        invalid: handleValidationRule({...prev[key]})
       }
     }))
   }
@@ -60,17 +67,10 @@ function App () {
         <BaseInput name='password'
                    label='Password'
                    rule={form.password.rule}
+                   type={form.password.type}
                    invalid={form.password.invalid}
                    value={form.password.value}
                    placeholder='your password'
-                   onInput={handleInput} />
-        <BaseInput name='message'
-                   textarea
-                   label='Message'
-                   rule={form.message.rule}
-                   invalid={form.message.invalid}
-                   value={form.message.value}
-                   placeholder='your message'
                    onInput={handleInput} />
 
         <button>Login</button>
