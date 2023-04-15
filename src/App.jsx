@@ -11,7 +11,7 @@ function App () {
     password: {
       value: '',
       type: 'password',
-      rule: 'max'
+      rule: 'required'
     }
   })
 
@@ -26,11 +26,21 @@ function App () {
     }))
   }
 
-  function handleSubmit (ev) {
+  async function handleSubmit (ev) {
     ev.preventDefault()
     Object.keys(form).forEach(key => {
       validate(key)
     })
+    const isValid = Object.keys(form).every(key => form[key].invalid === false)
+    if (isValid) {
+      const user = Object.keys(form).reduce((acc, key) => {
+        acc[key] = form[key].value
+        return acc
+      }, {})
+      console.log(`send to network`, user)
+      // dispatch(login(user))
+      // const response = await axios.post('/api/login', user)
+    }
   }
 
   function handleValidationRule ({rule, value}) {
