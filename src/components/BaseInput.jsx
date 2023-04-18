@@ -1,6 +1,6 @@
 import './css/base-input.scss'
 
-export const BaseInput = function ({name = '', rule = '', invalid = false,  value = '', textarea = '', label = '', type = '', id = '', placeholder = '', onInput = () => {}}) {
+export const BaseInput = function ({name = '', invalid = '',  value = '', textarea = '', label = '', type = '', id = '', placeholder = '', onInput = () => {}}) {
   const validation = {
     required: 'Acest camp este obligatoriu',
     email: 'Acest camp trebuie sa fie in formatul email',
@@ -32,7 +32,7 @@ export const BaseInput = function ({name = '', rule = '', invalid = false,  valu
           { value }
         </textarea>
       }
-      {invalid && <span className='validation-msg'>{validation[rule]}</span>}
+      {invalid && <span className='validation-msg'>{validation[invalid]}</span>}
     </label>
   )
 }

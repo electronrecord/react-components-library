@@ -1,12 +1,12 @@
 import { BaseInput } from './components'
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import './App.scss'
 
 function App () {
   const [form, setForm] = useState({
     name: {
       value: '',
-      rule: 'email'
+      rule: 'required|email'
     },
     password: {
       value: '',
@@ -21,7 +21,9 @@ function App () {
       [key]: {
         ...prev[key],
         value,
-        invalid: handleValidationRule({rule: prev[key].rule, value})
+        invalid: prev[key].rule.split('|').reduce((acc, rule) => {
+          return acc || handleValidationRule({rule, value})
+        }, '')
       }
     }))
   }
@@ -31,7 +33,7 @@ function App () {
     Object.keys(form).forEach(key => {
       validate(key)
     })
-    const isValid = Object.keys(form).every(key => form[key].invalid === false)
+    const isValid = Object.keys(form).every(key => form[key].invalid === '')
     if (isValid) {
       const user = Object.keys(form).reduce((acc, key) => {
         acc[key] = form[key].value
@@ -46,9 +48,9 @@ function App () {
   function handleValidationRule ({rule, value}) {
     switch (rule) {
       case 'required':
-        return !value
+        return value ? '' : rule
       case 'email':
-        return !/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(value)
+        return /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(value) ? '' : rule
       case 'max':
         return value.length > 6
     }
@@ -59,7 +61,9 @@ function App () {
       ...prev,
       [key]: {
         ...prev[key],
-        invalid: handleValidationRule({...prev[key]})
+        invalid: prev[key].rule.split('|').reduce((acc, rule) => {
+          return acc || handleValidationRule({rule, value: prev[key].value})
+        }, '')
       }
     }))
   }
