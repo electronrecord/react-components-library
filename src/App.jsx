@@ -1,4 +1,4 @@
-import { BaseInput } from './components'
+import {BaseForm, BaseInput} from './components'
 import {useEffect, useState} from "react"
 import './App.scss'
 
@@ -28,8 +28,7 @@ function App () {
     }))
   }
 
-  async function handleSubmit (ev) {
-    ev.preventDefault()
+  async function handleSubmit () {
     Object.keys(form).forEach(key => {
       validate(key)
     })
@@ -70,7 +69,8 @@ function App () {
 
   return (
     <div className="App">
-      <form onSubmit={ev => handleSubmit(ev)}>
+      <BaseForm onSubmit={handleSubmit}
+                buttonText='Login'>
         <BaseInput name='name'
                    label='Name'
                    rule={form.name.rule}
@@ -86,9 +86,7 @@ function App () {
                    value={form.password.value}
                    placeholder='your password'
                    onInput={handleInput} />
-
-        <button>Login</button>
-      </form>
+      </BaseForm>
     </div>
   )
 }
