@@ -10,6 +10,12 @@ function App () {
       rule: 'required|email',
       placeholder: 'your name'
     },
+    age: {
+      label: ['Child', 'Adult'],
+      type: 'radio',
+      value: '',
+      rule: 'required'
+    },
     password: {
       label: 'Password',
       value: '',
