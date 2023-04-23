@@ -16,6 +16,12 @@ function App () {
       value: '',
       rule: 'required'
     },
+    pets: {
+      label: ['Caini', 'Pisici', 'Papagali'],
+      type: 'checkbox',
+      value: [],
+      rule: 'required'
+    },
     password: {
       label: 'Password',
       value: '',

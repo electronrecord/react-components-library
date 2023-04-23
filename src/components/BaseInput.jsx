@@ -11,8 +11,11 @@ export const BaseInput = function ({name = '', invalid = '',  value = '', textar
     onInput({key: name, value: val})
   }
 
-  function handleRadio (item) {
-    onInput({key: name, value: item})
+  function handleCheckbox (item) {
+    const arr = [...value]
+    const index = arr.findIndex(val => val === item)
+    index > -1 ? arr.splice(index, 1) : arr.push(item)
+    onInput({key: name, value: arr})
   }
 
   return (
@@ -39,7 +42,25 @@ export const BaseInput = function ({name = '', invalid = '',  value = '', textar
                        name={name}
                        id={item}
                        checked={value === item}
-                       onChange={ev => handleRadio(item)} />
+                       onChange={ev => handleInput(item)} />
+                <label htmlFor={item}>{item}</label>
+              </span>
+            ))
+          }
+          <br/>
+        </>
+      }
+
+      {
+        type === 'checkbox' && <>
+          {
+            label?.map(item => (
+              <span key={item}>
+                <input type='checkbox'
+                       name={name}
+                       id={item}
+                       checked={value.includes(item)}
+                       onChange={ev => handleCheckbox(item)} />
                 <label htmlFor={item}>{item}</label>
               </span>
             ))

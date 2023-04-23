@@ -47,7 +47,7 @@ export const BaseForm = function ({onSubmit, data = {}, buttonText = '', childre
   function handleValidationRule ({rule, value}) {
     switch (rule) {
       case 'required':
-        return value ? '' : rule
+        return value.length ? '' : rule
       case 'email':
         return /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(value) ? '' : rule
       case 'max':
