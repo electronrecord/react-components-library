@@ -1,6 +1,15 @@
 import './css/base-input.scss'
 
-export const BaseInput = function ({name = '', invalid = '',  value = '', textarea = '', label = '', type = 'text', id = '', placeholder = '', onInput = () => {}}) {
+export const BaseInput = function ({name = '', data = {}, onInput = () => {}}) {
+  const {
+    invalid = '',
+    value = '',
+    textarea = '',
+    label = '',
+    type = 'text',
+    id = '',
+    placeholder = ''
+  } = data
   const validation = {
     required: 'Acest camp este obligatoriu',
     email: 'Acest camp trebuie sa fie in formatul email',

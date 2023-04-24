@@ -1,6 +1,17 @@
 import {BaseInput} from "./BaseInput.jsx"
 import {useState} from "react"
 
+function handleValidationRule ({rule, value}) {
+  switch (rule) {
+    case 'required':
+      return value.length ? '' : rule
+    case 'email':
+      return /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(value) ? '' : rule
+    case 'max':
+      return value.length > 6
+  }
+}
+
 export const BaseForm = function ({onSubmit, data = {}, buttonText = '', children = []}) {
   const [form, setForm] = useState({...data})
 
@@ -44,29 +55,13 @@ export const BaseForm = function ({onSubmit, data = {}, buttonText = '', childre
     }))
   }
 
-  function handleValidationRule ({rule, value}) {
-    switch (rule) {
-      case 'required':
-        return value.length ? '' : rule
-      case 'email':
-        return /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(value) ? '' : rule
-      case 'max':
-        return value.length > 6
-    }
-  }
-
   return (
     <form onSubmit={handleSubmit}>
       {...children}
       {children.length === 0 && Object.keys(data).map(key => (
         <BaseInput key={key}
                    name={key}
-                   label={form[key].label}
-                   rule={form[key].rule}
-                   type={form[key].type}
-                   invalid={form[key].invalid}
-                   value={form[key].value}
-                   placeholder={form[key].placeholder}
+                   data={form[key]}
                    onInput={handleInput}/>
       ))}
       {buttonText && <button>{buttonText}</button>}
