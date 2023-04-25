@@ -1,4 +1,7 @@
 import './css/base-input.scss'
+import {BaseRadio} from "./BaseRadio.jsx"
+import {BaseCheckbox} from "./BaseCheckbox.jsx"
+import {BaseTextarea} from "./BaseTextarea"
 
 export const BaseInput = function ({name = '', data = {}, onInput = () => {}}) {
   const {
@@ -42,50 +45,18 @@ export const BaseInput = function ({name = '', data = {}, onInput = () => {}}) {
         </>
       }
 
-      {
-        type === 'radio' && <>
-          {
-            label?.map(item => (
-              <span key={item}>
-                <input type='radio'
-                       name={name}
-                       id={item}
-                       checked={value === item}
-                       onChange={ev => handleInput(item)} />
-                <label htmlFor={item}>{item}</label>
-              </span>
-            ))
-          }
-          <br/>
-        </>
-      }
+      {type === 'radio' && <BaseRadio name={name}
+                                      data={data}
+                                      onChange={handleInput} />}
 
-      {
-        type === 'checkbox' && <>
-          {
-            label?.map(item => (
-              <span key={item}>
-                <input type='checkbox'
-                       name={name}
-                       id={item}
-                       checked={value.includes(item)}
-                       onChange={ev => handleCheckbox(item)} />
-                <label htmlFor={item}>{item}</label>
-              </span>
-            ))
-          }
-          <br/>
-        </>
-      }
+      {type === 'checkbox' && <BaseCheckbox name={name}
+                                            data={data}
+                                            onChange={handleCheckbox} />}
 
-      {textarea &&
-        <textarea id={id || name}
-                  value={value}
-                  placeholder={placeholder}
-                  onInput={ev => handleInput(ev.target.value) }>
-          { value }
-        </textarea>
-      }
+      {type === 'textarea' && <BaseTextarea name={name}
+                                            data={data}
+                                            onInput={handleInput} />}
+
       {invalid && <span className='validation-msg'>{validation[invalid]}</span>}
     </label>
   )

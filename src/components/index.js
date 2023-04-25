@@ -1,2 +1,5 @@
 export { BaseInput } from './BaseInput.jsx'
 export { BaseForm } from './BaseForm.jsx'
+export { BaseRadio } from './BaseRadio.jsx'
+export { BaseCheckbox } from './BaseCheckbox.jsx'
+export { BaseTextarea } from './BaseTextarea.jsx'

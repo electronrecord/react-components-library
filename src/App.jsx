@@ -23,12 +23,21 @@ function App () {
       rule: 'required'
     },
     password: {
+      name: 'password',
       label: 'Password',
       value: '',
       type: 'password',
       rule: 'required',
       placeholder: 'your password'
-    }
+    },
+    description: {
+      name: 'description',
+      label: 'Description',
+      value: '',
+      type: 'textarea',
+      rule: 'required',
+      placeholder: 'description'
+    },
   }
 
   async function handleSubmit (data) {
