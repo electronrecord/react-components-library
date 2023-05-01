@@ -1,7 +1,7 @@
 import {BaseInput} from "./BaseInput.jsx"
 import {useState} from "react"
 
-function handleValidationRule ({rule, value}) {
+export const handleValidationRule = function ({rule, value}) {
   switch (rule) {
     case 'required':
       return value.length ? '' : rule
@@ -9,6 +9,8 @@ function handleValidationRule ({rule, value}) {
       return /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(value) ? '' : rule
     case 'max':
       return value.length > 6
+    default:
+      return ''
   }
 }
 
