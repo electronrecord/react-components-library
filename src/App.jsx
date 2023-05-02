@@ -1,6 +1,8 @@
 import {BaseForm, BaseInput} from './components'
 import {useEffect, useState} from "react"
 import './App.scss'
+import {useDispatch, useSelector} from "react-redux"
+import {get_data, send_msg} from "./store/modules/homepage.js"
 
 function App () {
   const form = {
@@ -39,13 +41,22 @@ function App () {
       placeholder: 'description'
     },
   }
+  const data = useSelector(state => state.homepage.data)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    // make network req to get the initial data
+    dispatch(get_data())
+  }, [])
 
   async function handleSubmit (data) {
-    console.log(`send req`, data)
+    dispatch(send_msg(data))
   }
 
   return (
     <div className="App">
+      <h1>{ data.title }</h1>
+      <p>{ data.body }</p>
       <BaseForm data={form}
                 onSubmit={handleSubmit}
                 buttonText='Login' />
