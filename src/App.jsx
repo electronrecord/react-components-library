@@ -2,7 +2,7 @@ import {BaseForm, BaseInput} from './components'
 import {useEffect, useState} from "react"
 import './App.scss'
 import {useDispatch, useSelector} from "react-redux"
-import {get_data, send_msg} from "./store/modules/homepage.js"
+import {get_data, send_msg, useGetBlogpostByIdQuery} from "./store/modules/homepage.js"
 
 function App () {
   const form = {
@@ -41,12 +41,13 @@ function App () {
       placeholder: 'description'
     },
   }
-  const data = useSelector(state => state.homepage.data)
+  // const data = useSelector(state => state.homepage.data)
   const dispatch = useDispatch()
+  const { data = {}, isLoading, error } = useGetBlogpostByIdQuery('1')
 
   useEffect(() => {
     // make network req to get the initial data
-    dispatch(get_data())
+    // dispatch(get_data())
   }, [])
 
   async function handleSubmit (data) {

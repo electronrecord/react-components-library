@@ -1,9 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from "axios"
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const initialState = {
-  data: {}
+  data: {},
+  fetching: false,
+  error: false,
 }
+
+// Define a service using a base URL and expected endpoints
+export const blogpostApi = createApi({
+  reducerPath: 'blogpostApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com/' }),
+  endpoints: (builder) => ({
+    getBlogpostById: builder.query({
+      query: (id) => `posts/${id}`,
+    }),
+  }),
+})
+
+export const { useGetBlogpostByIdQuery } = blogpostApi
 
 export const homeSlice = createSlice({
   name: 'counter',
@@ -23,7 +39,7 @@ export const get_data = function () {
     try {
       const url = 'https://jsonplaceholder.typicode.com/posts/1'
       const { data } = await axios.get(url)
-      console.log(data)
+      // console.log(data)
       dispatch(SET_DATA(data))
     } catch (err) {
       console.log(err)
