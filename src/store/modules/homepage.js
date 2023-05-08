@@ -6,6 +6,7 @@ const initialState = {
   data: {},
   fetching: false,
   error: false,
+  user: {}
 }
 
 // Define a service using a base URL and expected endpoints
@@ -27,12 +28,15 @@ export const homeSlice = createSlice({
   reducers: {
     SET_DATA (state, action) { // action = { payload }
       state.data = action.payload
+    },
+    SET_USER (state, {payload}) {
+      state.user = payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { SET_DATA } = homeSlice.actions
+export const { SET_DATA, SET_USER } = homeSlice.actions
 
 export const get_data = function () {
   return async function (dispatch) {
