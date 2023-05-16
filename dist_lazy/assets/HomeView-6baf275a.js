@@ -1,0 +1,1 @@
+import{j as i,a as o,L as a}from"./index-7e9767ee.js";const s=function(){return i("main",{className:"home-view",children:[o("h1",{children:"This is Homepage - publicly available"}),o(a,{to:"/dashboard",children:"Go to Dashboard"}),o(a,{to:"/login",children:"Go to Login"})]})};export{s as HomeView,s as default};

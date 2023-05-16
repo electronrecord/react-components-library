@@ -2,6 +2,7 @@ import {useDispatch} from "react-redux"
 import {send_msg, useGetBlogpostByIdQuery} from "../store/modules/homepage.js"
 import {BaseForm} from "../components/index.js"
 import {useEffect} from "react"
+import {Link} from "react-router-dom"
 
 
 export const DashboardView = function () {
@@ -62,6 +63,9 @@ export const DashboardView = function () {
       <BaseForm data={form}
                 onSubmit={handleSubmit}
                 buttonText='Login' />
+
+      <Link to='/dashboard'>Go to Dashboard</Link>
+      <Link to='/login'>Go to Login</Link>
     </main>
   )
 }

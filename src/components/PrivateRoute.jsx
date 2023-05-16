@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux"
 import { Navigate } from "react-router-dom"
 
-export const PrivateRoute = function ({children}) {
+function PrivateRoute ({children}) {
   const user = useSelector(user => user.homepage.user)
 
   return (
@@ -10,3 +10,5 @@ export const PrivateRoute = function ({children}) {
     </>
   )
 }
+
+export default PrivateRoute
